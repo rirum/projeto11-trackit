@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import CreateAccount from "./pages/CreateAccount";
+import Habits from "./pages/Habits";
 import Login from "./pages/Login"
 
 function App() {
   return (
     <ContainerApp>
-      <Login/>
+      {/* <Login/> */}
       {/* <CreateAccount></CreateAccount> */}
+      <Habits></Habits>
     </ContainerApp>
   );
 }
