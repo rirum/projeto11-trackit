@@ -24,6 +24,5 @@ flex-direction: column;
 align-items: center;
 margin: 0px;
 padding: 0px;
-padding-bottom: 200px;
 font-family: 'Lexend Deca', sans-serif;
 `
