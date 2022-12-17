@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import TitleHabits from "../components/TitleHabits";
 import { BsTrash } from 'react-icons/bs';
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Habits(){
     return (
