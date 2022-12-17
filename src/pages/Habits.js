@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import TitleHabits from "../components/TitleHabits";
+import { BsTrash } from 'react-icons/bs';
 
 export default function Habits(){
     return (
         <ContainerHabits>
        <Header/>
 
-        <StyledTitle>
-            <p>Meus hábitos</p>
-            <button>+</button>
-        </StyledTitle>
+        <TitleHabits />
+     
 
         <RegisterHabits>
             <ContainerInputHabits>
@@ -26,57 +26,49 @@ export default function Habits(){
                 <ButtonDays><p>D</p></ButtonDays>
                 <ButtonDays><p>D</p></ButtonDays>
                 <ButtonDays><p>D</p></ButtonDays>
+              
                 </ButtonDayStyle>
 
                 <CancelSaveContainer>
                 <p>Cancelar</p>
                 <SaveButton> <p>Salvar</p> </SaveButton>
                 </CancelSaveContainer>
-
+                
             </ContainerInputHabits>
         </RegisterHabits>
 
+        <HabitsSaved>
+            <TextTrash>
+                <p>Ler 1 capítulo de livro</p>
+                <BsTrash color="#666666" />
+            </TextTrash>
+            <ButtonDayStyle>
+            <ButtonDays><p>D</p></ButtonDays>
+            <ButtonDays><p>D</p></ButtonDays>
+            <ButtonDays><p>D</p></ButtonDays>
+            </ButtonDayStyle>
+        </HabitsSaved>
+        
+
         <StyledText>
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+            
         </StyledText>
 
        <Footer />
             
         </ContainerHabits>
+        
     )
 }
 
+//cor do botao ativado: background-color: #CFCFCF, color:white;
 
 const ContainerHabits = styled.div`
 background-color: #E5E5E5;
 height:100vh;
 `
 
-const StyledTitle = styled.div`
-width: 375px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-top: 92px;
-p{
-    color:#126BA5;
-    font-size: 22px;
-    margin-left: 17px;
-}
-button {
-    width: 40px;
-    height: 36px;
-    color: white;
-    background-color: #52B6FF;
-    border: 1px solid #52B6FF;
-    border-radius: 5px;
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 17px;
-}
-`
 const RegisterHabits = styled.div`
 width: 340px;
 height: 180px;
@@ -162,4 +154,22 @@ p{
     font-size: 18px;
 }
 `
-
+const HabitsSaved = styled.div`
+width: 340px;
+height: 91px;
+background-color: white;
+border-radius: 5px;
+margin-left: 17px;
+margin-top: 20px;
+`
+const TextTrash = styled.div`
+width: 320px;
+height: 15px;
+display: flex;
+justify-content: space-between;
+padding-top: 17px;
+p{ 
+ margin-left: 15px;
+ color: #666666;
+}
+`
