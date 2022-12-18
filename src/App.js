@@ -4,16 +4,30 @@ import Habits from "./pages/Habits";
 import Login from "./pages/Login"
 import Historic from "./pages/Historic";
 import TodayPage from "./pages/TodayPage";
+import { BrowserRouter, Routes, Route  } from "react-router-dom";
+import AppProvider from "./AppContext/Provider";
 
 function App() {
   return (
+  
+    <BrowserRouter>
+    
     <ContainerApp>
-      {/* <Login/> */}
-      {/* <CreateAccount />*/}
-      {/* <Habits/> */}
-      {/* <Historic /> */}
-      <TodayPage />
+      <AppProvider>
+          <Routes>
+            <Route path="/" element={<Login />}/>
+            <Route path="/cadastro" element={<CreateAccount />}/>
+            <Route path="/habitos" element={<Habits />}/>
+            <Route path="/hoje" element={<TodayPage />} />
+            <Route path="/historico" element={<Historic />} />
+            
+            </Routes>
+      </AppProvider>
     </ContainerApp>
+    
+
+    </BrowserRouter>
+    
   );
 }
 

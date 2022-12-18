@@ -1,22 +1,78 @@
 import logo from "../assets/logo-trackit.png";
 import styled from "styled-components";
+import {useState} from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
+
 
 export default function CreateAccount() {
+    const [email, setEmail ] = useState('');
+    const [ name, setName ] = useState('');
+    const [ image, setImage ] = useState('');
+    const [ password, setPassword ] = useState ('');
+    const [status, setStatus] = useState(false);
+
+    const navigate = useNavigate();
+
+    function register(event){
+        event.preventDefault();
+        setStatus(true);
+
+        const object = { 
+            email,
+            name,
+            image,
+            password
+        }
+
+        const URL = ('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up');
+        const promise = axios.post((URL), object);
+        promise.then((response) => {
+            console.log(response.data)
+            alert("Usuário criado com sucesso! Faça seu login")
+            navigate("/")
+            setStatus(false)
+        });
+        promise.catch((error) => {
+            alert(error.response.data.message)
+            window.location.reload();
+        });
+        
+
+    }
+
+
+        // const sucessLogin = (response) => {
+        //     console.log(response.data)
+        // }
+
+        // const errorLogin = (error) => {
+        //     console.log(error)
+        //     setStatus(false);
+        // }
+
+    
+
     return(
         <>
         <ContainerLogo> 
             <img src={logo} alt="logo"/> 
         </ContainerLogo>
-        
-        <LoginInputs placeholder="email"></LoginInputs>
-        <LoginInputs placeholder="senha"></LoginInputs>
-        <LoginInputs placeholder="nome"></LoginInputs>
-        <LoginInputs placeholder="foto"></LoginInputs>
+        <form onSubmit={register}>
+        <LoginInputs type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" required disabled={status}/>
+        <LoginInputs type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" required disabled={status}/>
+        <LoginInputs type="text" value={name} onChange={e => setName(e.target.value)} placeholder="nome" required disabled={status}/>
+        <LoginInputs type="url" value={image} onChange={e => setImage(e.target.value)} placeholder="foto" required disabled={status}/>
 
-        <StyledButton> <p>Cadastrar</p></StyledButton>
+        {!status ? <StyledButton state={status}> <p>Cadastrar</p></StyledButton> :
+        <LoadingButton disable={true}> <ThreeDots color="#FFFFFF" height="50" width="50" wrapperStyle={{}} wrapperClassName="" visible={true}/> </LoadingButton>
+        }   
+        </form>
 
+        <Link to="/" style={{textDecoration:'none'}}>
         <SignUpLink><p>Já tem uma conta? Faça login!</p></SignUpLink>
-        
+        </Link>
         </>
     )
 }
@@ -64,4 +120,16 @@ const SignUpLink = styled.div`
 font-size: 14px;
 color: #52B6FF;
 margin-top: 25px;
+`
+const LoadingButton = styled.button`
+width: 303px;
+height:45px;
+background-color: #52B6FF;
+border: 5px solid #52B6FF;
+border-radius: 5px;
+font-family: 'Lexend Deca', sans-serif;
+opacity: 0.7;
+display: flex;
+align-items: center;
+justify-content: center;
 `

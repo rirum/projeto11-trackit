@@ -1,16 +1,25 @@
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import AppContext from "../AppContext/Context";
 
 export default function Footer(){
-
-    const percentage = 66;
+    const {habits} = useContext(AppContext);
+    
+    let percentage;
+    if(habits === undefined || habits.length === 0) {
+        percentage = 0;
+    }
 return (
 
     
     <StyledFooter>
+    <Link to="/habitos" style={{textDecoration:'none'}}>
     <p>Hábitos</p>
+    </Link>
+    <Link to="/hoje" style={{textDecoration:'none'}}>
     <CircleDiv>
         <CircularProgressbar text="Hoje" value={percentage} styles={buildStyles({
             textSize:'18px',
@@ -19,8 +28,10 @@ return (
             pathColor: 'white',
         })}/>
     </CircleDiv>
-    
+    </Link>
+    <Link to="/historico" style={{textDecoration:'none'}}>
     <p>Histórico</p>
+    </Link>
 </StyledFooter>
 )
 
