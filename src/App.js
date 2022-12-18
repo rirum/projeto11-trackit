@@ -3,6 +3,7 @@ import CreateAccount from "./pages/CreateAccount";
 import Habits from "./pages/Habits";
 import Login from "./pages/Login"
 import Historic from "./pages/Historic";
+import TodayPage from "./pages/TodayPage";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       {/* <Login/> */}
       {/* <CreateAccount />*/}
       {/* <Habits/> */}
-      <Historic />
+      {/* <Historic /> */}
+      <TodayPage />
     </ContainerApp>
   );
 }
