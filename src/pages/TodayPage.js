@@ -2,8 +2,10 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {BsCheck} from "react-icons/bs"
+import dayjs from "dayjs";
 
 export default function TodayPage() {
+    
     return(
         <ContainerHabits>
             <Header/>
@@ -12,18 +14,6 @@ export default function TodayPage() {
                 <h1>Segunda, 17/05</h1>
                 <p>Nenhum hábito concluído ainda</p>
             </TextHistoric>
-
-            <HabitsWrapper>
-                <TextTodayWrapper>
-                <h2>Ler 1 capítulo de livro</h2>
-                <p>Sequência atual:</p>
-                <p>Seu recorde:</p>
-                </TextTodayWrapper>
-                <ButtonCheckWrapper>
-                <BsCheck color="white" size={70}/>
-                </ButtonCheckWrapper>
-            </HabitsWrapper>
-
 
             <HabitsWrapper>
                 <TextTodayWrapper>

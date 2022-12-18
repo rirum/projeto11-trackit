@@ -12,6 +12,12 @@ export default function Footer(){
     if(habits === undefined || habits.length === 0) {
         percentage = 0;
     }
+    // else{
+	// 	const done = habits.filter((habit) => habit.done);
+	// 	percentage = (done.length / habits.length) * 100;
+	// }
+
+
 return (
 
     

@@ -4,7 +4,6 @@ import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate} from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import AppProvider from "../AppContext/Provider";
 import AppContext from "../AppContext/Context";
 
 

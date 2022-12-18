@@ -43,14 +43,7 @@ export default function CreateAccount() {
     }
 
 
-        // const sucessLogin = (response) => {
-        //     console.log(response.data)
-        // }
-
-        // const errorLogin = (error) => {
-        //     console.log(error)
-        //     setStatus(false);
-        // }
+   
 
     
 

@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import AppContext from "../AppContext/Context";
 import bob from "../assets/bob.png";
 
 export default function Header(){
+    //avatar nao está lendo ?
+    const { user, image } = useContext(AppContext)
     return (
         <>
         <StyledHeader><p>TrackIt</p>
-        <img src={bob} alt="avatar"/>
+        <img src={user.image} alt="avatar"/>
         
         </StyledHeader>
         </>
@@ -34,9 +38,7 @@ img{
     width: 50px;
     height:50px;
     border-radius: 99px;
-    background-image: url();
     margin-right: 18px;
- 
- 
-}
+ }
 `
+
