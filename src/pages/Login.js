@@ -2,7 +2,7 @@ import logo from "../assets/logo-trackit.png";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate} from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import AppContext from "../AppContext/Context";
 
@@ -13,12 +13,8 @@ export default function Login() {
     const [ status, setStatus ] = useState(false); // status para entrar e loading
 
     const navigate = useNavigate();
-    const [ user, setUser ] = useState ({
-        email:"",
-        password:"",
-    });
-
-    const {setToken, setImage,setHabits} = useContext(AppContext);
+    
+    const {setToken, setUser} = useContext(AppContext);
 
 
    function signIn(event) {
@@ -32,8 +28,7 @@ export default function Login() {
 
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
         const promise = axios.post((URL), object);
-        promise.then((response) => {
-            console.log(response.data)
+        promise.then((response) => {            
             setUser({
                 id: response.data.id,
                 name: response.data.name,
@@ -41,10 +36,11 @@ export default function Login() {
                 email: response.data.email,
                 password: response.data.password,
                 token: response.data.token
-            })
+            })            
+            setToken(response.data.token);
+            
             setStatus(false)
-            navigate("/hoje")
-            // setHabits(response.data.token)
+            navigate("/hoje")            
 
         })
         promise.catch((error) => {
@@ -56,51 +52,24 @@ export default function Login() {
       }
 
 
-
-
-
-    // const CheckLoggedIn = () => {
-
-    //     const object = {
-    //         email: email,
-    //         password: password
-    //     }
-
-    //     const sucessLogin = (response) => {
-    //         const token = response.data.token
-    //         const img = response.data.image
-    //         navigate("/hoje")
-    //     }
-
-    //     const failLogin = (error) => {
-    //         alert(error.response.data.message)
-    //         setStatus(false)
-    //     }
-
-    //     promise.then(sucessLogin);
-    //     promise.catch(failLogin);
-    //     setStatus(true);
-    // }
-        
-
     return(
         <>
         <ContainerLogo> 
             <img src={logo} alt="logo"/> 
         </ContainerLogo>
         <form disabled={status} onSubmit={signIn}>
-        <LoginInputs disabled={status} type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" required />
-        <LoginInputs disabled={status} type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="senha" required />
+        <LoginInputs disabled={status} data-test="email-input" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" required />
+        <LoginInputs disabled={status} data-test="password-input" type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="senha" required />
         
        
         
-        {!status ? <StyledButton disabled={status} type="submit"> <p>Entrar</p></StyledButton> :
+        {!status ? <StyledButton disabled={status} type="submit" data-test="login-btn"> <p>Entrar</p></StyledButton> :
         <LoadingButton disabled={true}> <ThreeDots color="#FFFFFF" height="50" width="50" wrapperStyle={{}} wrapperClassName="" visible={true}/> </LoadingButton>
         }   
         </form>
 
         <Link to="/cadastro" style={{textDecoration:'none'}}>
-        <SignUpLink><p>Não tem uma conta? Cadastre-se</p></SignUpLink>
+        <SignUpLink data-test="signup-link"><p>Não tem uma conta? Cadastre-se</p></SignUpLink>
         </Link>
 
         </>

@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import AppContext from "../AppContext/Context";
-import bob from "../assets/bob.png";
 
 export default function Header(){
-    //avatar nao está lendo ?
-    const { user, image } = useContext(AppContext)
+    
+    const { user } = useContext(AppContext)    
+    
     return (
         <>
-        <StyledHeader><p>TrackIt</p>
+        <StyledHeader data-test="header"><p>TrackIt</p>
         <img src={user.image} alt="avatar"/>
         
         </StyledHeader>

@@ -53,18 +53,18 @@ export default function CreateAccount() {
             <img src={logo} alt="logo"/> 
         </ContainerLogo>
         <form onSubmit={register}>
-        <LoginInputs type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" required disabled={status}/>
-        <LoginInputs type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" required disabled={status}/>
-        <LoginInputs type="text" value={name} onChange={e => setName(e.target.value)} placeholder="nome" required disabled={status}/>
-        <LoginInputs type="url" value={image} onChange={e => setImage(e.target.value)} placeholder="foto" required disabled={status}/>
+        <LoginInputs data-test="email-input" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="email" required disabled={status}/>
+        <LoginInputs data-test="password-input" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="senha" required disabled={status}/>
+        <LoginInputs data-test="user-name-input" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="nome" required disabled={status}/>
+        <LoginInputs data-test="user-image-input" type="url" value={image} onChange={e => setImage(e.target.value)} placeholder="foto" required disabled={status}/>
 
-        {!status ? <StyledButton state={status}> <p>Cadastrar</p></StyledButton> :
+        {!status ? <StyledButton data-test="signup-btn" state={status}> <p>Cadastrar</p></StyledButton> :
         <LoadingButton disable={true}> <ThreeDots color="#FFFFFF" height="50" width="50" wrapperStyle={{}} wrapperClassName="" visible={true}/> </LoadingButton>
         }   
         </form>
 
         <Link to="/" style={{textDecoration:'none'}}>
-        <SignUpLink><p>Já tem uma conta? Faça login!</p></SignUpLink>
+        <SignUpLink data-test="login-link"><p>Já tem uma conta? Faça login!</p></SignUpLink>
         </Link>
         </>
     )

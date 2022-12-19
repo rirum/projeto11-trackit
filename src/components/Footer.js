@@ -6,27 +6,18 @@ import { useContext } from "react";
 import AppContext from "../AppContext/Context";
 
 export default function Footer(){
-    const {habits} = useContext(AppContext);
+    const { percentage } = useContext(AppContext);    
     
-    let percentage;
-    if(habits === undefined || habits.length === 0) {
-        percentage = 0;
-    }
-    // else{
-	// 	const done = habits.filter((habit) => habit.done);
-	// 	percentage = (done.length / habits.length) * 100;
-	// }
-
 
 return (
 
     
-    <StyledFooter>
+    <StyledFooter data-test="menu">
     <Link to="/habitos" style={{textDecoration:'none'}}>
-    <p>Hábitos</p>
+    <div data-test="habit-link"><p>Hábitos</p></div>
     </Link>
     <Link to="/hoje" style={{textDecoration:'none'}}>
-    <CircleDiv>
+    <CircleDiv data-test="today-link">
         <CircularProgressbar text="Hoje" value={percentage} styles={buildStyles({
             textSize:'18px',
             textColor: 'white',
@@ -36,7 +27,7 @@ return (
     </CircleDiv>
     </Link>
     <Link to="/historico" style={{textDecoration:'none'}}>
-    <p>Histórico</p>
+    <div data-test="history-link"><p>Histórico</p></div>
     </Link>
 </StyledFooter>
 )
@@ -53,6 +44,7 @@ bottom: 0px;
 display: flex;
 justify-content: space-around;
 align-items: center;
+z-index: 1;
 p{ 
     font-size:18px;
     font-weight: 400;

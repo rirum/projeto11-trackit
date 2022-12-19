@@ -8,36 +8,39 @@ import AppContext from "../AppContext/Context";
 import axios from "axios";
 
 export default function Habits(){
-    const { image, user, configuration, habits, setHabits, setConcludedHabits} = useContext(AppContext);
+    const { configuration, habits, setHabits } = useContext(AppContext);
     const [ habitsDays, setHabitsDays ] = useState([]);
-    const [ status, setStatus ] = useState(false);
-    const [ moreHabits, setMoreHabits ] = useState(false);
-    const [ habitsName, setHabitsName] = useState ("");
-    
+    const [ status, setStatus ] = useState(false);    
+    const [ habitsName, setHabitsName] = useState ("");   
+    const [ showForm, setShowForm ] = useState(false); 
 
     const WEEKARRAY = [
+       {name: 'D', id: 0},
        {name: 'S', id: 1},
        {name: 'T', id: 2},
        {name: 'Q', id: 3},
        {name: 'Q', id: 4},
        {name: 'S', id: 5},
-       {name: 'S', id: 6},
-       {name: 'D', id: 7},
+       {name: 'S', id: 6},       
     ];
     
     useEffect(() => {
         const URL="https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+        
         const promise = axios.get((URL), configuration)
-        promise.then((response) => setHabits(response.data))
-        promise.catch((error) => console.log(error.response.data))
-    }, [setConcludedHabits])
 
-    function selectDays(day) {
+        promise.then((response) => setHabits(response.data));
+        promise.catch((error) => console.log(error.response.data));
+
+    }, [ habits, configuration, setHabits ]);
+    
+    function selectDays(day) {        
         if(habitsDays.includes(day.id)){
             setHabitsDays(habitsDays.filter((habit) => habit !== day.id))
             return
         }
         const days = [...habitsDays, day.id]
+        
         setHabitsDays(days)
     }
 
@@ -55,33 +58,30 @@ export default function Habits(){
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
         const promise = axios.post((URL), object, configuration);
         promise.then((response) => {
-            setHabits([...habits,response.data])
+            setHabits([...habits,response.data])            
             setHabitsName("")
             setHabitsDays([])
-
+            setShowForm(false);
         })
         promise.catch((error)=> {
-            alert(error.response.data.message)
-            setMoreHabits(false)
+            alert(error.response.data.message)            
             setHabitsName("")
             setHabitsDays([])
         })
     }
 
     function add() {
-        setMoreHabits(true);
+        setShowForm(true);        
     }
 
-    function cancel() {
-        setMoreHabits(false);
+    function cancel() {        
+        setShowForm(false);
     }
 
     function delHabit(habit){
+        
         if (window.confirm("Deseja apagar esse hábito?")) {
-            axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habits.id}`, configuration)
-            .then (() => {
-                setHabits(habits.filter((habit) => habit.id !== habit.id))
-            })
+            axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`, configuration);            
         } else {
             return
         }
@@ -92,25 +92,27 @@ export default function Habits(){
 
        <StyledTitle>
         <p>Meus hábitos</p>
-        <button onClick={add}>+</button>
-        </StyledTitle>
-     
+        <button data-test="habit-create-btn" onClick={add}>+</button>
+        </StyledTitle>     
 
-        <RegisterHabits>
-            <ContainerInputHabits status={moreHabits}>
-
+        {showForm && <RegisterHabits>
+            <ContainerInputHabits data-test="habit-create-container">
+                
                 <form onSubmit={addNewHabit}>
-                <HabitsInput disabled={status} value={habitsName} onChange={(event) => setHabitsName(event.target.value)} placeholder="nome do hábito" required input="text"/>
+                <HabitsInput data-test="habit-name-input" disabled={status} value={habitsName} onChange={(event) => setHabitsName(event.target.value)} placeholder="nome do hábito" required input="text"/>
 
                 <ButtonDayStyle>
+
                 {WEEKARRAY.map((day) => 
-                <ButtonDays key={day.id} day={habitsDays.includes(day.id)} onClick={() => selectDays(day)}><p>{day.name}</p></ButtonDays>
+                    <ButtonDays data-test="habit-day" key={day.id} type="button" day={habitsDays.includes(day.id)} onClick={() => selectDays(day)}><p>{day.name}</p></ButtonDays>
                 )}
                 </ButtonDayStyle>
 
                 <CancelSaveContainer>
-                <CancelButton type="button" onClick={cancel} disabled={status}><p>Cancelar</p></CancelButton>
-                {!status ? <SaveButton disabled={status} type="submit"> <p>Salvar</p> </SaveButton> :
+
+                <CancelButton data-test="habit-create-cancel-btn" type="button" onClick={cancel} disabled={status}><p>Cancelar</p></CancelButton>                
+
+                {!status ? <SaveButton data-test="habit-create-save-btn" disabled={status} type="submit"> <p>Salvar</p> </SaveButton> :
                     <LoadingButton disable={true}> 
                         <ThreeDots color="#FFFFFF" height="50" width="50" wrapperStyle={{}} wrapperClassName="" visible={true}/> 
                     </LoadingButton>}
@@ -119,29 +121,31 @@ export default function Habits(){
                 </form>
             </ContainerInputHabits>
         </RegisterHabits>
+        }
+        
+        {habits.length < 1 &&
+            <StyledText>
+                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>            
+            </StyledText>
+        }
 
-        {habits.map((habit) =>
-        <HabitsSaved>
+        {habits.length > 0 && habits.map((habit) =>
+        <HabitsSaved data-test="habit-container">
            
             <TextTrash key={habit.id}>
-                <p>{habit.name}</p>
-                <BsTrash onClick={delHabit} color="#666666" />
+                <div data-test="habit-name"><p>{habit.name}</p></div>
+                <div data-test="habit-delete-btn"><BsTrash onClick={() => delHabit(habit)} color="#666666" /></div>
             </TextTrash>
             <ButtonDayStyle>
             {WEEKARRAY.map ((day) =>
-            <ButtonDays key={day.id} day={(habit.days).includes(day.id)}><p>D</p></ButtonDays>
+            <ButtonDays data-test="habit-day" key={day.id} day={(habit.days).includes(day.id)}><p>{day.name}</p></ButtonDays>
             )}
             </ButtonDayStyle>
             
         </HabitsSaved>
         )}
         
-        {habits.length < 1 &&
-        <StyledText>
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-            
-        </StyledText>
-            }
+        
        <Footer />
             
         </ContainerHabits>
