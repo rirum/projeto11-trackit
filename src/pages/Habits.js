@@ -104,7 +104,7 @@ export default function Habits(){
                 <ButtonDayStyle>
 
                 {WEEKARRAY.map((day) => 
-                    <ButtonDays data-test="habit-day" key={day.id} type="button" day={habitsDays.includes(day.id)} onClick={() => selectDays(day)}><p>{day.name}</p></ButtonDays>
+                    <ButtonDays data-test="habit-day" key={day.id} type="button" day={habitsDays.includes(day.id)} onClick={() => selectDays(day)} disabled={status}><p>{day.name}</p></ButtonDays>
                 )}
                 </ButtonDayStyle>
 
