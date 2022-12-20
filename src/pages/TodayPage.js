@@ -31,7 +31,10 @@ export default function TodayPage() {
                     count++;
                 }
             }
-            const percent = (count / response.data.length) * 100;
+            let percent = (count / response.data.length) * 100;
+            if (isNaN(percent)) {
+                percent = 0;
+            }
             setPercentage(percent.toFixed());            
         });
         
@@ -69,7 +72,10 @@ export default function TodayPage() {
                     count++;
                 }
             }
-            const percent = (count / response.data.length) * 100;
+            let percent = (count / response.data.length) * 100;
+            if (isNaN(percentage)) {
+                percent = 0;
+            }
             setPercentage(percent.toFixed());            
         });
         
@@ -100,7 +106,7 @@ export default function TodayPage() {
                         </TextWrapper>
                         <TextWrapper data-test="today-habit-record"><p>Seu recorde:</p>
                         
-                        <ParaHabit isGreen={ habit.highestSequence > 0 }>
+                        <ParaHabit isGreen={ habit.currentSequence >= habit.highestSequence && habit.highestSequence > 0  }>
                             { habit.highestSequence } dias
                         </ParaHabit>
                         </TextWrapper>
